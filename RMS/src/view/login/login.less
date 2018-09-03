@@ -1,16 +1,43 @@
 .login{
     width: 100%;
     height: 100%;
-    background-image: url('../../assets/images/login-bg.jpg');
+    background: #f1f2f6;
+    /* background-image: url('../../assets/images/login-bg.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: center; */
     position: relative;
+    padding-top: 40px;
+    .ivu-card-head p, .ivu-card-head-inner{
+        text-align: center;
+    }
+    .ivu-card-body{
+        padding: 0;
+    }
+    &-top{
+        width: 80%;
+        margin: 0 auto;
+        height: 100px;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        justify-content: center;
+        font-size: 16px;
+        padding-left: 40px;
+        span:nth-child(2){
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+    }
     &-con{
-        position: absolute;
+        /* position: absolute;
         right: 160px;
         top: 50%;
-        transform: translateY(-60%);
-        width: 300px;
+        transform: translateY(-60%); */
+        width: 400px;
+        height: 400px;
+        margin: 100px auto 0 auto;
         &-header{
             font-size: 16px;
             font-weight: 300;
@@ -19,6 +46,67 @@
         }
         .form-con{
             padding: 10px 0 0;
+            .ivu-input-group > .ivu-input:last-child, .ivu-input-group-append{
+                height: 40px;
+            }
+            /* .ivu-form-item-content{
+                display: flex;
+                align-items: center;
+            } */
+            .code_input{
+                width: 70%;
+                // flex: 1;
+                float: left;
+                // margin-right: 10px;
+            }
+            canvas{
+                margin-left: 5%;
+                width: 25%;
+                height: 40px;
+                border: 1px solid #eee;
+            }
+            .login-btn{
+                width: 40%;
+                margin: 0 30%;
+            }
+            .remember_psw{
+                width: 100%;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-bottom: 1px solid #e8eaec;
+            }
+            .remember_psw p{
+                width: 50%;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+                font-size: 14px;
+            }
+            .remember_psw p:first-child{
+                color: #333;
+            }
+            .remember_psw span{
+                font-size: 14px;
+                padding-left: 30px;
+            }
+            .remember_psw button{
+                font-size: 14px;
+                margin-right: 20px;
+                width: 100px;
+                height: 35px;
+                line-height: 35px;
+                border: 1px solid #eee;
+                background: transparent;
+                border-radius: 5px;
+                text-align: center;
+                color: #333;
+            }
+            form{
+                margin: 0 30px;
+            }
+
         }
         .login-tip{
             font-size: 10px;

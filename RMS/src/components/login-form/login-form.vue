@@ -1,7 +1,7 @@
 <template>
   <Form ref="loginForm" :model="form" :rules="rules" @keydown.enter.native="handleSubmit">
     <FormItem prop="userName">
-      <Input v-model="form.userName" placeholder="请输入用户名">
+      <Input v-model="form.userName" placeholder="请输入账号">
         <span slot="prepend">
           <Icon :size="16" type="ios-person"></Icon>
         </span>
@@ -14,8 +14,16 @@
         </span>
       </Input>
     </FormItem>
+    <FormItem prop="verifyCode">
+      <Input class="code_input" v-model="form.verifyCode" placeholder="请输入验证码">
+        <span slot="prepend">
+          <Icon :size="16" type="ios-person"></Icon>
+        </span>
+      </Input>
+      <canvas>图片验证码</canvas>
+    </FormItem>
     <FormItem>
-      <Button @click="handleSubmit" type="primary" long>登录</Button>
+      <Button class="login-btn" @click="handleSubmit" type="primary" long>登录</Button>
     </FormItem>
   </Form>
 </template>
@@ -38,13 +46,22 @@ export default {
           { required: true, message: '密码不能为空', trigger: 'blur' }
         ]
       }
+    },
+    verifyCodeRules: {
+      type: Array,
+      default: () => {
+        return [
+          { required: true, message: '验证码不能为空', trigger: 'blur' }
+        ]
+      }
     }
   },
   data () {
     return {
       form: {
-        userName: 'super_admin',
-        password: ''
+        userName: '',
+        password: '',
+        verifyCode:''
       }
     }
   },
@@ -52,7 +69,8 @@ export default {
     rules () {
       return {
         userName: this.userNameRules,
-        password: this.passwordRules
+        password: this.passwordRules,
+        verifyCode:this.verifyCode
       }
     }
   },
@@ -62,7 +80,8 @@ export default {
         if (valid) {
           this.$emit('on-success-valid', {
             userName: this.form.userName,
-            password: this.form.password
+            password: this.form.password,
+            verifyCode: this.form.verifyCode,
           })
         }
       })
