@@ -13,7 +13,7 @@
     </div>
     <div class="login-con">
       <div class="form-con">
-        <div class="table" v-if="seen">
+        <div class="table">
           <div class="table_title">账号登录</div>
           <login-form @on-success-valid="handleSubmit"></login-form>
           <div class="remember_psw">
@@ -32,8 +32,6 @@ import { mapActions } from 'vuex'
 export default {
   data () {
     return {
-      seen: true,
-      show: false
     }
   },
   components: {
@@ -41,8 +39,8 @@ export default {
   },
   methods: {
     ...mapActions(['handleLogin', 'getUserInfo']),
-    handleSubmit ({ userName, password }) {
-      this.handleLogin({ userName, password }).then(res => {
+    handleSubmit ({ userName, password,verifyCode,remember }) {
+      this.handleLogin({ userName, password,verifyCode,remember }).then(res => {
         this.getUserInfo().then(res => {
           this.$router.push({
             name: 'home'
@@ -50,9 +48,6 @@ export default {
         })
       })
     },
-    showCodeImg () {
-      this.seen = !this.seen
-    }
   }
 }
 </script>

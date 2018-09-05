@@ -3,29 +3,29 @@
      <FormItem prop="userName">
       <Input v-model="form.userName" placeholder="请输入账号">
         <span slot="prepend">
-          <Icon :size="24" type="ios-person"></Icon>
+          <Icon :size="24" color="#fff" type="ios-person"></Icon>
         </span>
       </Input>
     </FormItem>
     <FormItem prop="password">
       <Input type="password" v-model="form.password" placeholder="请输入密码">
         <span slot="prepend">
-          <Icon :size="22" type="ios-lock"></Icon>
+          <Icon :size="22" color="#fff" type="ios-lock"></Icon>
         </span>
       </Input>
     </FormItem>
     <FormItem prop="verifyCode">
-      <Input class="code_input" v-model="form.verifyCode" placeholder="请输入验证码"></Input>
-      <!-- <canvas>图片验证码</canvas> -->
+      <Input class="code_input" v-model="form.verifyCode" v-on:input ="change1" placeholder="请输入验证码"></Input>
       <div class="code" @click="refreshCode">
         <s-identify :identifyCode="identifyCode"></s-identify>
       </div>
+      <div v-if="isErrCode" class="ivu-form-item-error-tip">验证码输入错误！</div>
     </FormItem>
     <FormItem prop="checkBox">
-      <Checkbox label="remember"></Checkbox>记住密码
+      <Checkbox label="remember" v-model="form.remember"></Checkbox><span class="check">记住密码</span>
     </FormItem>
     <FormItem>
-      <Button class="login-btn" @click="handleSubmit" type="primary" long>登录</Button>
+      <Button class="login-btn" @click="handleSubmit" long>登录</Button>
     </FormItem>
   </Form>
 </template>
@@ -62,10 +62,11 @@ export default {
         userName: '',
         password: '',
         verifyCode: '',
-        checkBox: ''
+        remember: ''
       },
       identifyCodes: '1234567890',
-      identifyCode: ''
+      identifyCode: '',
+      isErrCode: false
     }
   },
   mounted () {
@@ -77,23 +78,30 @@ export default {
       return {
         userName: this.userNameRules,
         password: this.passwordRules,
-        verifyCode: this.verifyCode,
-        checkBox: this.checkBox
+        verifyCode: this.verifyCodeRules,
       }
     }
   },
   methods: {
     handleSubmit () {
+      var inputCode = this.form.verifyCode;
+      var verifyCode = this.identifyCode;
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.$emit('on-success-valid', {
+          if(inputCode!=verifyCode){
+            this.isErrCode=true
+          }else{
+            this.$emit('on-success-valid', {
             userName: this.form.userName,
             password: this.form.password,
             verifyCode: this.form.verifyCode,
-            checkBox: this.form.checkBox
-          })
+            remember: this.form.remember
+            })
+          }
         }
       })
+      console.log(this.form.verifyCode)
+      console.log(this.form.remember)
     },
     randomNum (min, max) {
       return Math.floor(Math.random() * (max - min) + min)
@@ -107,6 +115,9 @@ export default {
         this.identifyCode += this.identifyCodes[this.randomNum(0, this.identifyCodes.length)]
       }
       console.log(this.identifyCode)
+    },
+    change1 (){
+      this.isErrCode=false
     }
   }
 }
