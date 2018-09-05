@@ -2,7 +2,9 @@
   <div>
     <div v-if="searchable && searchPlace === 'top'" class="search-con search-con-top">
       <template v-if="buttonAdd">
-        <Button style="margin: 10px;" type="primary" @click="add">新增</Button>
+        <router-link to="./add">
+          <Button style="margin: 10px;" type="primary" @click="add">新增</Button>
+        </router-link>
       </template>
       <template v-if="buttonExport">
         <Button style="margin: 10px;" type="primary" @click="exportExcel">导出</Button>
@@ -136,7 +138,7 @@ export default {
     buttonAdd: {
       type: Boolean,
       default: true
-    }, 
+    },
     buttonExport: {
       type: Boolean,
       default: true

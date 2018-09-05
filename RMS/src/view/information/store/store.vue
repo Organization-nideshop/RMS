@@ -5,9 +5,6 @@
     </Card>
     <!-- <Modal title="【融智大厦】店坐标设置" modal1=true content="【内容内特】店坐标设置"/> -->
     <button type="button" class="btn" @click="showModal">打开Modal</button>
-    <router-link to="./add">
-     <button type="button" class="btn" >编辑</button>
-    </router-link>
 
     <Modal v-show="isModalVisible" @close="closeModal" title="【融智大厦】店坐标设置" content="【内容内特】店坐标设置"/>
   </div>

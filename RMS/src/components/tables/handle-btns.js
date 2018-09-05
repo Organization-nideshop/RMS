@@ -7,7 +7,7 @@ const btns = {
       },
       on: {
         'on-ok': () => {
-          this.$router.push({name: '/store/add', params:{ id : '1' } })
+          this.$router.push({name: '/add'})
         }
       }
     }, [
