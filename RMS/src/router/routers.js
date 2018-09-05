@@ -2,7 +2,7 @@ import Main from '@/view/main'
 import parentView from '@/components/parent-view'
 
 /**
- * iview-admin中meta除了原生参数外可配置的参数:
+ * RMS中meta除了原生参数外可配置的参数:
  * meta: {
  *  hideInMenu: (false) 设为true后在左侧菜单不会显示该页面选项
  *  notCache: (false) 设为true后页面不会缓存
@@ -69,6 +69,16 @@ export default [
           title: '门店管理'
         },
         component: () => import('@/view/information/store/store.vue')
+      },
+      {
+        path: 'add',
+        name: 'add',
+        meta: {
+          icon: 'ios-infinite',
+          title: '门店新增',
+          hideInMenu: true
+        },
+        component: () => import('@/view/information/store/add.vue')
       },
       {
         path: 'department',

@@ -1,6 +1,12 @@
 <template>
   <div>
     <div v-if="searchable && searchPlace === 'top'" class="search-con search-con-top">
+      <template v-if="buttonAdd">
+        <Button style="margin: 10px;" type="primary" @click="add">新增</Button>
+      </template>
+      <template v-if="buttonExport">
+        <Button style="margin: 10px;" type="primary" @click="exportExcel">导出</Button>
+      </template>
       <Select v-model="searchKey" class="search-col">
         <Option v-for="item in columns" v-if="item.key !== 'handle'" :value="item.key" :key="`search-col-${item.key}`">{{ item.title }}</Option>
       </Select>
@@ -38,13 +44,6 @@
       <slot name="footer" slot="footer"></slot>
       <slot name="loading" slot="loading"></slot>
     </Table>
-    <div v-if="searchable && searchPlace === 'bottom'" class="search-con search-con-top">
-      <Select v-model="searchKey" class="search-col">
-        <Option v-for="item in columns" v-if="item.key !== 'handle'" :value="item.key" :key="`search-col-${item.key}`">{{ item.title }}</Option>
-      </Select>
-      <Input placeholder="输入关键字搜索" class="search-input" v-model="searchValue"/>
-      <Button class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;搜索</Button>
-    </div>
     <a id="hrefToExportTable" style="display: none;width: 0px;height: 0px;"></a>
   </div>
 </template>
@@ -133,7 +132,15 @@ export default {
     searchPlace: {
       type: String,
       default: 'top'
-    }
+    },
+    buttonAdd: {
+      type: Boolean,
+      default: true
+    }, 
+    buttonExport: {
+      type: Boolean,
+      default: true
+    },
   },
   /**
    * Events
@@ -256,6 +263,15 @@ export default {
     },
     onExpand (row, status) {
       this.$emit('on-expand', row, status)
+    },
+    exportExcel () {
+      // this.$refs.tables.exportCsv({
+      this.exportCsv({
+        filename: `table-${(new Date()).valueOf()}.csv`
+      })
+    },
+    add () {
+      console.log("新增")
     }
   },
   watch: {
