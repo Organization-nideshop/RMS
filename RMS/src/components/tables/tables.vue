@@ -3,7 +3,7 @@
     <div v-if="searchable && searchPlace === 'top'" class="search-con search-con-top">
       <template v-if="buttonAdd">
         <router-link to="./add">
-          <Button style="margin: 10px;" type="primary" @click="add">新增</Button>
+          <Button style="margin: 10px;" type="primary">新增</Button>
         </router-link>
       </template>
       <template v-if="buttonExport">
@@ -53,9 +53,13 @@
 <script>
 import TablesEdit from './edit.vue'
 import handleBtns from './handle-btns'
+import Modal from '_c/modal'
 import './index.less'
 export default {
   name: 'Tables',
+  components: {
+    Modal
+  },
   props: {
     value: {
       type: Array,
@@ -143,6 +147,10 @@ export default {
       type: Boolean,
       default: true
     },
+    isModalVisible:{
+      type: Boolean,
+      default: false
+    }
   },
   /**
    * Events
@@ -271,9 +279,6 @@ export default {
       this.exportCsv({
         filename: `table-${(new Date()).valueOf()}.csv`
       })
-    },
-    add () {
-      console.log("新增")
     }
   },
   watch: {

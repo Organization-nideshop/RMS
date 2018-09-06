@@ -37,7 +37,8 @@ export default [
         meta: {
           hideInMenu: true,
           title: '首页',
-          notCache: true
+          notCache: true,
+          hideParentInMenu: true
         },
         component: () => import('@/view/single-page/home')
       }
@@ -59,7 +60,7 @@ export default [
           icon: 'md-trending-up',
           title: '公司信息维护'
         },
-        component: () => import('@/view/information/company-information/company-information.vue')
+        component: () => import('@/view/information/company-information/company-information.vue'),
       },
       {
         path: 'store',
@@ -68,18 +69,40 @@ export default [
           icon: 'ios-infinite',
           title: '门店管理'
         },
-        component: () => import('@/view/information/store/store.vue')
+        component: parentView,
+        children: [
+          {
+            path: 'index',
+            name: 'index',
+            meta: {
+              icon: 'md-funnel',
+              title: '门店管理',
+              hideParentInMenu: true
+            },
+            component: () => import('@/view/information/store/store.vue')
+          },
+          {
+            path: 'add',
+            name: 'add',
+            meta: {
+              icon: 'md-funnel',
+              title: '门店新增',
+              hideInMenu: true
+            },
+            component: () => import('@/view/information/store/addOrUpdate.vue')
+          }
+        ]
       },
-      {
-        path: 'add',
-        name: 'add',
-        meta: {
-          icon: 'ios-infinite',
-          title: '门店新增',
-          hideInMenu: true
-        },
-        component: () => import('@/view/information/store/add.vue')
-      },
+      // {
+      //   path: 'add',
+      //   name: 'add',
+      //   meta: {
+      //     icon: 'ios-infinite',
+      //     title: '门店新增',
+      //     hideInMenu: true
+      //   },
+      //   component: () => import('@/view/information/store/add.vue')
+      // },
       {
         path: 'department',
         name: 'department',
