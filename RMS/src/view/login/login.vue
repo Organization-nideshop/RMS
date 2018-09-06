@@ -12,16 +12,36 @@
       <img src="../../assets/images/logo-long.png"/>
     </div>
     <div class="login-con">
-      <div class="form-con">
-        <div class="table">
-          <div class="table_title">账号登录</div>
-          <login-form @on-success-valid="handleSubmit"></login-form>
-          <div class="remember_psw">
-              <p class="login-tip">忘记密码</p>
-              <p class="login-tip">免费注册</p>
+      <Row type="flex" align="middle" class="code-row-bg">
+        <Col :xs="2" :sm="4" :md="6" :lg="8">Col</Col>
+        <Col :xs="2" :sm="4" :md="6" :lg="8">Col</Col>
+        <Col :xs="20" :sm="16" :md="12" :lg="8">
+          <div class="form-con">
+            <!-- 登录 -->
+            <div class="table" v-if="seen">
+              <div class="table_title">账号登录</div>
+              <login-form @on-success-valid="handleSubmit" seen></login-form>
+              <div class="remember_psw">
+                <p class="login-tip" @click="resetOrLogin">忘记密码</p>
+                <p class="login-tip">免费注册</p>
+              </div>
+            </div>
+            <!-- 找回密码 -->
+            <div class="table" v-else>
+              <div class="table_title">找回密码</div>
+              <login-form @on-success-valid="handleReset"></login-form>
+              <div class="remember_psw">
+                <p class="login-tip" @click="resetOrLogin">返回登录</p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </Col>
+        <!-- <Col span="16">col-16</Col>
+        <Col span="8">
+          
+        </Col> -->
+      </Row>
+      
     </div>
   </div>
 </template>
@@ -32,6 +52,7 @@ import { mapActions } from 'vuex'
 export default {
   data () {
     return {
+      seen:true
     }
   },
   components: {
@@ -48,6 +69,12 @@ export default {
         })
       })
     },
+    handleReset (){
+
+    },
+    resetOrLogin (){
+      this.seen = !this.seen;
+    }
   }
 }
 </script>
