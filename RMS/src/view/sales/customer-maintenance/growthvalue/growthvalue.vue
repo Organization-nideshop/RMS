@@ -1,6 +1,6 @@
 <template>
   <div>
-    卡
+    成长值管理
   </div>
 </template>
 

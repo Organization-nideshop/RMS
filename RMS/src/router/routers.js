@@ -57,7 +57,6 @@ export default [
         path: 'company_information',
         name: 'company_information',
         meta: {
-          icon: 'md-trending-up',
           title: '公司信息维护'
         },
         component: () => import('@/view/information/company-information/company-information.vue'),
@@ -66,7 +65,6 @@ export default [
         path: 'store',
         name: 'store',
         meta: {
-          icon: 'ios-infinite',
           title: '门店管理'
         },
         redirect: 'store/index',
@@ -76,7 +74,6 @@ export default [
             path: 'index',
             name: 'index',
             meta: {
-              icon: 'md-funnel',
               title: '门店管理',
               hideParentInMenu: true
             },
@@ -86,7 +83,6 @@ export default [
             path: 'add',
             name: 'add',
             meta: {
-              icon: 'md-funnel',
               title: '门店新增',
               hideInMenu: true
             },
@@ -96,7 +92,6 @@ export default [
             path: 'edit',
             name: 'edit',
             meta: {
-              icon: 'md-funnel',
               title: '门店编辑',
               hideInMenu: true
             },
@@ -108,7 +103,6 @@ export default [
         path: 'department',
         name: 'department',
         meta: {
-          icon: 'md-grid',
           title: '公司部门管理'
         },
         component: () => import('@/view/information/department/department.vue')
@@ -117,7 +111,6 @@ export default [
         path: 'customer',
         name: 'customer',
         meta: {
-          icon: 'md-pause',
           title: '大客户管理'
         },
         component: () => import('@/view/information/customer/customer.vue')
@@ -126,34 +119,38 @@ export default [
         path: 'user',
         name: 'user',
         meta: {
-          icon: 'logo-markdown',
           title: '用户管理'
         },
         component: () => import('@/view/information/user/user.vue')
       },
       {
-        path: 'editor_page',
-        name: 'editor_page',
+        path: 'supplier',
+        name: 'supplier',
         meta: {
-          icon: 'ios-create',
           title: '供应商管理'
         },
         component: () => import('@/view/information/supplier/supplier.vue')
       },
       {
+        path: 'landing',
+        name: 'landing',
+        meta: {
+          title: '打印设置'
+        },
+        component: () => import('@/view/information/landing/landing.vue')
+      },
+      {
         path: 'printer',
         name: 'printer',
         meta: {
-          icon: '_bear',
-          title: '打印设置'
+          title: '计算机登陆审核'
         },
         component: () => import('@/view/information/printer/printer.vue')
       },
       {
-        path: 'cash-register',
-        name: 'cash-register',
+        path: 'cash_register',
+        name: 'cash_register',
         meta: {
-          icon: 'logo-markdown',
           title: '收银机配置'
         },
         component: () => import('@/view/information/cash-register/cash-register.vue')
@@ -162,7 +159,6 @@ export default [
         path: 'template',
         name: 'template',
         meta: {
-          icon: 'ios-create',
           title: '模板设置'
         },
         component: () => import('@/view/information/template/template.vue')
@@ -171,7 +167,6 @@ export default [
         path: 'pay',
         name: 'pay',
         meta: {
-          icon: '_bear',
           title: '支付方式'
         },
         component: () => import('@/view/information/pay/pay.vue')
@@ -191,7 +186,6 @@ export default [
         path: 'management',
         name: 'management',
         meta: {
-          icon: 'md-trending-up',
           title: '商品管理'
         },
         component: () => import('@/view/goods/management/management.vue')
@@ -200,7 +194,6 @@ export default [
         path: 'modify_price',
         name: 'modify_price',
         meta: {
-          icon: 'ios-infinite',
           title: '商品调价'
         },
         component: () => import('@/view/goods/modify-price/modify-price.vue')
@@ -208,70 +201,199 @@ export default [
     ]
   },
   {
-    path: '/sales',
-    name: 'sales',
+    path: '/coupons',
+    name: 'coupons',
     meta: {
       icon: 'logo-buffer',
-      title: '销售管理'
+      title: '礼券'
     },
     component: Main,
     children: [
       {
-        path: 'coupons',
-        name: 'coupons',
+        path: 'coupons_index',
+        name: 'coupons_index',
         meta: {
-          icon: 'md-trending-up',
-          title: '礼券'
+          title: '礼券名称'
         },
-        component: () => import('@/view/sales/coupons/coupons.vue')
+        component: () => import('@/view/sales/coupons/coupons-index/coupons-index.vue')
       },
       {
-        path: 'card',
-        name: 'card',
+        path: 'coupons_sale',
+        name: 'coupons_sale',
         meta: {
-          icon: 'ios-infinite',
-          title: '卡'
+          title: '礼券销售'
         },
-        component: () => import('@/view/sales/card/card.vue')
-      },
-      {
-        path: 'sales_promotion',
-        name: 'sales_promotion',
-        meta: {
-          icon: 'ios-infinite',
-          title: '单品促销'
-        },
-        component: () => import('@/view/sales/sales-promotion/sales-promotion.vue')
-      },
-      {
-        path: 'package_promotion',
-        name: 'package_promotion',
-        meta: {
-          icon: 'ios-infinite',
-          title: '套餐促销'
-        },
-        component: () => import('@/view/sales/package-promotion/package-promotion.vue')
-      },
-      {
-        path: 'full_reduction_promotion',
-        name: 'full_reduction_promotion',
-        meta: {
-          icon: 'ios-infinite',
-          title: '满减/送促销'
-        },
-        component: () => import('@/view/sales/full-reduction-promotion/full-reduction-promotion.vue')
-      },
-      {
-        path: 'customer_maintenance',
-        name: 'customer_maintenance',
-        meta: {
-          icon: 'ios-infinite',
-          title: '客群维护'
-        },
-        component: () => import('@/view/sales/customer-maintenance/customer-maintenance.vue')
+        component: () => import('@/view/sales/coupons/coupons-sale/coupons-sale.vue')
       }
     ]
+ },
+{
+  path: '/card',
+  name: 'card',
+  meta: {
+    icon: 'logo-buffer',
+    title: '卡'
   },
+  component: Main,
+  children: [
+    {
+      path: 'card_templet',
+      name: 'card_templet',
+      meta: {
+        title: '卡模板'
+      },
+      component: () => import('@/view/sales/card/card-templet/card-templet.vue')
+    },
+    {
+      path: 'card_send',
+      name: 'card_send',
+      meta: {
+        title: '发卡'
+      },
+      component: () => import('@/view/sales/card/card-send/card-send.vue')
+    },
+    {
+      path: 'card_sale',
+      name: 'card_sale',
+      meta: {
+        title: '卡销售'
+      },
+      component: () => import('@/view/sales/card/card-sale/card-sale.vue')
+    }
+  ]
+},
+{
+  path: '/sales_promotion',
+  name: 'sales_promotion',
+  meta: {
+    hide: true
+  },
+  component: Main,
+  children: [
+    {
+      path: 'sales_promotion',
+      name: 'sales_promotion',
+      meta: {
+        icon: 'ios-hammer',
+        title: '单品促销'
+      },
+      component: () => import('@/view/sales/sales-promotion/sales-promotion.vue')
+    }
+  ]
+},
+{
+  path: '/package_promotion',
+  name: 'package_promotion',
+  meta: {
+    hide: true
+  },
+  component: Main,
+  children: [
+    {
+      path: 'package_promotion',
+      name: 'package_promotion',
+      meta: {
+        icon: 'ios-hammer',
+        title: '套餐促销'
+      },
+      component: () => import('@/view/sales/package-promotion/package-promotion.vue')
+    }
+  ]
+},
+{
+  path: '/full_reduction_promotion',
+  name: 'full_reduction_promotion',
+  meta: {
+    hide: true
+  },
+  component: Main,
+  children: [
+    {
+      path: 'full_reduction_promotion',
+      name: 'full_reduction_promotion',
+      meta: {
+        icon: 'ios-hammer',
+        title: '满减/送促销'
+      },
+      component: () => import('@/view/sales/full-reduction-promotion/full-reduction-promotion.vue')
+    }
+  ]
+},
+{
+  path: '/customer_maintenance',
+  name: 'customer_maintenance',
+  meta: {
+    icon: 'logo-buffer',
+    title: '客群维护'
+  },
+  component: Main,
+  children: [
+    {
+      path: 'grade',
+      name: 'grade',
+      meta: {
+        title: '等级管理'
+      },
+      component: () => import('@/view/sales/customer-maintenance/grade/grade.vue')
+    },
+    {
+      path: 'recharge',
+      name: 'recharge',
+      meta: {
+        title: '充值管理'
+      },
+      component: () => import('@/view/sales/customer-maintenance/recharge/recharge.vue')
+    },
+    {
+      path: 'integral',
+      name: 'integral',
+      meta: {
+        title: '积分管理'
+      },
+      component: () => import('@/view/sales/customer-maintenance/integral/integral.vue')
+    },
+    {
+      path: 'growthvalue',
+      name: 'growthvalue',
+      meta: {
+        title: '成长值管理'
+      },
+      component: () => import('@/view/sales/customer-maintenance/growthvalue/growthvalue.vue')
+    },
+    {
+      path: 'activatecard',
+      name: 'activatecard',
+      meta: {
+        title: '开卡策略'
+      },
+      component: () => import('@/view/sales/customer-maintenance/activatecard/activatecard.vue')
+    },
+    {
+      path: 'perinformation',
+      name: 'perinformation',
+      meta: {
+        title: '完善资料策略'
+      },
+      component: () => import('@/view/sales/customer-maintenance/perinformation/perinformation.vue')
+    },
+    {
+      path: 'recommend',
+      name: 'recommend',
+      meta: {
+        title: '推荐赠送策略'
+      },
+      component: () => import('@/view/sales/customer-maintenance/recommend/recommend.vue')
+    },
+    {
+      path: 'signin',
+      name: 'signin',
+      meta: {
+        title: '签到赠送策略'
+      },
+      component: () => import('@/view/sales/customer-maintenance/signin/signin.vue')
+    }
+  ]
+},
   {
     path: '/member',
     name: 'member',
@@ -304,7 +426,6 @@ export default [
         path: 'purchase_order',
         name: 'purchase_order',
         meta: {
-          icon: 'md-trending-up',
           title: '采购单'
         },
         component: () => import('@/view/storehouse/purchase-order/purchase-order.vue')
@@ -313,7 +434,6 @@ export default [
         path: 'materials_storehouse',
         name: 'materials_storehouse',
         meta: {
-          icon: 'ios-infinite',
           title: '原料库管理'
         },
         component: () => import('@/view/storehouse/materials-storehouse/materials-storehouse.vue')
@@ -322,7 +442,6 @@ export default [
         path: 'product_storehouse',
         name: 'product_storehouse',
         meta: {
-          icon: 'ios-infinite',
           title: '成品库管理'
         },
         component: () => import('@/view/storehouse/product-storehouse/product-storehouse.vue')

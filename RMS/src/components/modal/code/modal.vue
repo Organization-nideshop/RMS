@@ -47,18 +47,7 @@ export default {
 }
 </script>
 <style lang="less">
-.modal.c
-
-
-ode {
-
-
-  width:
-
-
-
-
-
- auto;
+  .modal.code {
+    width:auto;
   }
 </style>
