@@ -69,6 +69,7 @@ export default [
           icon: 'ios-infinite',
           title: '门店管理'
         },
+        redirect: 'store/index',
         component: parentView,
         children: [
           {
@@ -90,19 +91,19 @@ export default [
               hideInMenu: true
             },
             component: () => import('@/view/information/store/addOrUpdate.vue')
+          },
+          {
+            path: 'edit',
+            name: 'edit',
+            meta: {
+              icon: 'md-funnel',
+              title: '门店编辑',
+              hideInMenu: true
+            },
+            component: () => import('@/view/information/store/addOrUpdate.vue')
           }
         ]
       },
-      // {
-      //   path: 'add',
-      //   name: 'add',
-      //   meta: {
-      //     icon: 'ios-infinite',
-      //     title: '门店新增',
-      //     hideInMenu: true
-      //   },
-      //   component: () => import('@/view/information/store/add.vue')
-      // },
       {
         path: 'department',
         name: 'department',

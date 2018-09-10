@@ -1,11 +1,16 @@
 <template>
   <div class="custom-bread-crumb">
     <Breadcrumb :style="{fontSize: `${fontSize}px`}">
-      <BreadcrumbItem v-for="item in list" :to="item.to" :key="`bread-crumb-${item.name}`" >
-        <!-- <template v-if="item"> -->
+      <BreadcrumbItem v-for="(item,index) in list" :to="item.to" :key="`bread-crumb-${item.name}`" >
           <!-- <common-icon style="margin-right: 4px;" :type="item.icon || ''"/> -->
-          {{ showTitle(item) }}
-        <!-- </template> -->
+          <template v-if="index==1">
+            {{ showTitle(item) }}
+          </template>
+          <template v-else>
+            <router-link :to="item.path">
+            {{ showTitle(item) }}
+            </router-link>
+          </template>
       </BreadcrumbItem>
     </Breadcrumb>
   </div>

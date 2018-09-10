@@ -4,19 +4,23 @@
       <tables ref="tables" editable searchable buttonAdd buttonExport search-place="top" v-model="tableData" :columns="columns" @on-delete="handleDelete"/>
     </Card>
     <Modal v-show="isModalVisible" @close="closeModal" title="【融智大厦】店坐标设置" content="【内容内特】店坐标设置"/>
+    <CodeModal v-show="isCodeVisible" @close="closeCodeModal" @download="downloadCode" title="门店二维码" :imgUrl="imgUrl" />
   </div>
 </template>
 
 <script>
 import Tables from '_c/tables'
 import Modal from '_c/modal'
+import CodeModal from '_c/modal/code/modal'
 import { TMap } from './map.js'
 import { getTableData } from '@/api/data'
+import imgUrl from '@/assets/images/code.png'
 export default {
   name: 'store',
   components: {
     Tables,
-    Modal
+    Modal,
+    CodeModal
   },
   data () {
     return {
@@ -28,7 +32,8 @@ export default {
         // {title: '店长', key: 'shopowner'},
         // {title: '店长手机', key: 'phone'},
         // {title: '地址', key: 'address'}
-        {title: '操作',key: 'handle',link:{edit:'/information/store/add',other:''},options: ['edit','code','disable'],width: 300,button: [
+        {title: '操作',key: 'handle',link:{edit:'/information/store/edit',other:''},options: ['edit','disable'],width: 300,
+        button: [
             (h, params, vm) => {
               return h('Button', {
                 props: {
@@ -41,6 +46,21 @@ export default {
                   }
                 }
               }, '地址')
+            },
+            (h, params, vm) => {
+              return h('Button', {
+                props: {
+                  type: 'text',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.isCodeVisible = true
+                    // this.remove(params.index)
+                    this.imgUrl = imgUrl
+                  }
+                }
+              }, '门店二维码')
             }
           ]},
         {title: '门店编码', key: 'name'},
@@ -51,19 +71,29 @@ export default {
         {title: '地址', key: 'name'}
       ],
       tableData: [],
-      isModalVisible: false
+      isModalVisible: false,
+      isCodeVisible: false,
+      imgUrl:'',
     }
   },
   methods: {
     handleDelete (params) {
       console.log(params)
     },
-    closeModal: function () {
-    this.isModalVisible = false
+    closeModal () {
+      this.isModalVisible = false
     },
-     success(res){
-        this.isModalVisible = res;
-     }
+    closeCodeModal (){
+      this.isCodeVisible = false
+    },
+    downloadCode (){
+      var url = this.imgUrl
+      var a = document.createElement('a')
+      var event = new MouseEvent('click')
+      a.download = name || 'codeImg'
+      a.href = url
+      a.dispatchEvent(event);
+    }
   },
   mounted () {
     getTableData().then(res => {

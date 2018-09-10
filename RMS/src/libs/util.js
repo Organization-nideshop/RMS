@@ -59,7 +59,8 @@ export const getBreadCrumbList = (routeMetched, homeRoute) => {
     let obj = {
       icon: (item.meta && item.meta.icon) || '',
       name: item.name,
-      meta: item.meta
+      meta: item.meta,
+      path: item.path
     }
     return obj
   })
