@@ -20,7 +20,7 @@
             <!-- 登录 -->
             <div class="table" v-if="seen">
               <div class="table_title">账号登录</div>
-              <login-form @on-success-valid="handleSubmit" seen></login-form>
+              <login-form @on-success-valid="handleSubmit" seen v-on:tips="tip"></login-form>
               <div class="remember_psw">
                 <p class="login-tip" @click="resetOrLogin">忘记密码</p>
                 <p class="login-tip">免费注册</p>
@@ -29,12 +29,15 @@
             <!-- 找回密码 -->
             <div class="table" v-else>
               <div class="table_title">找回密码</div>
-              <login-form @on-success-valid="handleReset"></login-form>
+              <login-form @on-success-valid="handleReset" v-on:tips="tip"></login-form>
               <div class="remember_psw">
                 <p class="login-tip" @click="resetOrLogin">返回登录</p>
               </div>
             </div>
           </div>
+          <Alert type="error" v-if="disabled" show-icon>
+              {{tips}}
+          </Alert>
         </Col>
       </Row>
       
@@ -48,7 +51,9 @@ import { mapActions } from 'vuex'
 export default {
   data () {
     return {
-      seen:true
+      seen:true,
+      tips:'',
+      disabled:''
     }
   },
   components: {
@@ -70,6 +75,14 @@ export default {
     },
     resetOrLogin (){
       this.seen = !this.seen;
+    },
+    tip (data){
+      this.tips=data;
+      if(data==''){
+        this.disabled = false
+      }else{
+        this.disabled = true
+      }
     }
   }
 }

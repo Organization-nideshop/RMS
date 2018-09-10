@@ -24,13 +24,13 @@
     <!-- 找回密码 -->
     <template v-else>
       <FormItem prop="userName">
-        <Input v-model="form.userName" placeholder="请输入账号" v-on:input="judge"></Input>
+        <Input v-model="form.userName" placeholder="请输入账号" v-on:input="reset"></Input>
       </FormItem>
       <FormItem prop="mail">
-        <Input v-model="form.mail" placeholder="请输入邮箱" v-on:input="judge"></Input>
+        <Input v-model="form.mail" placeholder="请输入邮箱" v-on:input="reset"></Input>
       </FormItem>
       <FormItem prop="mobile">
-        <Input v-model="form.mobile" placeholder="请输入手机号" v-on:input="judge"></Input>
+        <Input v-model="form.mobile" placeholder="请输入手机号" v-on:input="reset"></Input>
       </FormItem>
       <FormItem prop="_verifyCode">
         <Input class="code_input" v-model="form._verifyCode" placeholder="请输入验证码" v-on:input="reset"></Input>
@@ -50,42 +50,6 @@ export default {
     SIdentify
   },
   props: {
-    /* userNameRules: {
-      type: Array,
-      default: () => {
-        return [{ required: true, message: "账号不能为空", trigger: "blur" }];
-      }
-    },
-    passwordRules: {
-      type: Array,
-      default: () => {
-        return [{ required: true, message: "密码不能为空", trigger: "blur" }];
-      }
-    },
-    verifyCodeRules: {
-      type: Array,
-      default: () => {
-        return [{ required: true, message: "验证码不能为空", trigger: "blur" }];
-      }
-    },
-    _verifyCodeRules: {
-      type: Array,
-      default: () => {
-        return [{ required: true, message: "验证码不能为空", trigger: "blur" }];
-      }
-    },
-    mobileRules: {
-      type: Array,
-      default: () => {
-        return [{ required: true, message: "手机号不能为空", trigger: "blur" }];
-      }
-    },
-    mailRules: {
-      type: Array,
-      default: () => {
-        return [{ required: true, message: "邮箱不能为空", trigger: "blur" }];
-      }
-    }, */
     seen: {
       type: Boolean,
       default: false
@@ -105,7 +69,8 @@ export default {
       identifyCodes: "1234567890",
       identifyCode: "",
       dis:false,
-      _dis:false
+      _dis:false,
+      tipsContent:''
     };
   },
   mounted() {
@@ -117,18 +82,6 @@ export default {
     this.judge();
     this.reset();
   },
-  /* computed: {
-    rules() {
-      return {
-        userName: this.userNameRules,
-        password: this.passwordRules,
-        verifyCode: this.verifyCodeRules,
-        _verifyCode: this._verifyCodeRules,
-        mobile: this.mobileRules,
-        mail: this.mailRules
-      };
-    }
-  }, */
   methods: {
     
     randomNum(min, max) {
@@ -153,7 +106,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           if (inputCode != verifyCode&&inputCode!='') {
-            this.$Message.info('验证码输入错误！');
+            this.tip("验证码输入错误！");  
           }else{
             this.$emit("on-success-valid", {
               userName: this.form.userName,
@@ -173,12 +126,13 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           if(!(/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(mail))){
-            this.$Message.info('请输入有效的邮箱！');
+            this.tip("请输入有效的邮箱！"); 
             return false;
           }else if(!(/^1[345789]\d{9}$/.test(mobile))){
-            this.$Message.info('请输入有效的手机号！');
+            this.tip("请输入有效的手机号！"); 
             return false; 
           } else {
+            this.tip("");
             this.$emit("on-success-valid", {
               userName: this.form.userName,
               mail: this.form.mail,
@@ -191,6 +145,7 @@ export default {
       console.log(this.form.verifyCode);
       console.log(this.form.remember);
     },
+    //没有填写信息时按钮为禁用状态
     judge(){
       console.log(2222222)
       var userName = this.form.userName;
@@ -216,6 +171,9 @@ export default {
       }else{
         this._dis = false
       }
+    },
+    tip:function(data){
+      this.$emit("tips",data);
     }
   }
 };
