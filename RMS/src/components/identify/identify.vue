@@ -88,7 +88,7 @@
       },
       drawText (ctx, txt, i) {
         ctx.fillStyle = this.randomColor(this.colorMin, this.colorMax)
-        ctx.font = this.randomNum(this.fontSizeMin, this.fontSizeMax) + 'px SimHei'
+        ctx.font = this.randomNum(this.fontSizeMin+10, this.fontSizeMax+5) + 'px SimHei'
         let x = (i + 1) * (this.contentWidth / (this.identifyCode.length + 1))
         let y = this.randomNum(this.fontSizeMax, this.contentHeight - 5)
         var deg = this.randomNum(-45, 45)
