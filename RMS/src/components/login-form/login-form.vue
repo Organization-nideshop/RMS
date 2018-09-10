@@ -1,66 +1,43 @@
 <template>
-  <Form ref="loginForm" :model="form" :rules="rules" @keydown.enter.native="handleSubmit">
+  <Form ref="loginForm" :model="form" @keydown.enter.native="handleSubmit">
     <!-- 登录 -->
     <template v-if="seen">
       <FormItem prop="userName">
-      <Input v-model="form.userName" placeholder="请输入账号">
-        <span slot="prepend">
-          <Icon :size="24" color="#fff" type="ios-person"></Icon>
-        </span>
-      </Input>
+      <Input v-model="form.userName" placeholder="请输入账号" v-on:input="judge"></Input>
     </FormItem>
     <FormItem prop="password">
-      <Input type="password" v-model="form.password" placeholder="请输入密码">
-        <span slot="prepend">
-          <Icon :size="22" color="#fff" type="ios-lock"></Icon>
-        </span>
-      </Input>
+      <Input type="password" v-model="form.password" placeholder="请输入密码" v-on:input="judge"></Input>
     </FormItem>
     <FormItem prop="verifyCode">
-      <Input class="code_input" v-model="form.verifyCode" v-on:input ="change1" placeholder="请输入验证码"></Input>
+      <Input class="code_input" v-model="form.verifyCode" placeholder="请输入验证码" v-on:input="judge"></Input>
       <div class="code" @click="refreshCode">
         <s-identify :identifyCode="identifyCode"></s-identify>
       </div>
-      <div v-if="isErrCode" class="ivu-form-item-error-tip">验证码输入错误！</div>
     </FormItem>
     <FormItem prop="checkBox">
       <Checkbox label="remember" v-model="form.remember"></Checkbox><span class="check">记住密码</span>
     </FormItem>
     <FormItem>
-      <Button class="login-btn" @click="handleSubmit" long>登录</Button>
+      <Button class="login-btn" v-bind:disabled="dis" @click="handleSubmit" long>登录</Button>
     </FormItem>
     </template>
     <!-- 找回密码 -->
     <template v-else>
       <FormItem prop="userName">
-        <Input v-model="form.userName" placeholder="请输入账号">
-          <span slot="prepend">
-            <Icon :size="24" color="#fff" type="ios-person"></Icon>
-          </span>
-        </Input>
+        <Input v-model="form.userName" placeholder="请输入账号" v-on:input="judge"></Input>
       </FormItem>
       <FormItem prop="mail">
-        <Input v-model="form.mail" placeholder="请输入邮箱" v-on:input ="change1">
-          <span slot="prepend">
-            <Icon :size="24" color="#fff" type="ios-mail"></Icon>
-          </span>
-        </Input>
-        <div v-if="isErrMail" class="ivu-form-item-error-tip">请输入有效的邮箱！</div>
+        <Input v-model="form.mail" placeholder="请输入邮箱" v-on:input="judge"></Input>
       </FormItem>
       <FormItem prop="mobile">
-        <Input v-model="form.mobile" placeholder="请输入手机号" v-on:input ="change1">
-          <span slot="prepend">
-            <Icon :size="24" color="#fff" type="ios-call"></Icon>
-          </span>
-        </Input>
-        <div v-if="isErrMobile" class="ivu-form-item-error-tip">请输入有效的手机号！</div>
+        <Input v-model="form.mobile" placeholder="请输入手机号" v-on:input="judge"></Input>
       </FormItem>
       <FormItem prop="_verifyCode">
-        <Input class="code_input" v-model="form._verifyCode" placeholder="请输入验证码"></Input>
+        <Input class="code_input" v-model="form._verifyCode" placeholder="请输入验证码" v-on:input="reset"></Input>
         <div class="code_btn">获取验证码</div>
       </FormItem>
       <FormItem>
-        <Button class="login-btn" @click="handleReset" long>找回密码</Button>
+        <Button class="login-btn" v-bind:disabled="_dis" @click="handleReset" long>找回密码</Button>
       </FormItem>
     </template>
   </Form>
@@ -73,7 +50,7 @@ export default {
     SIdentify
   },
   props: {
-    userNameRules: {
+    /* userNameRules: {
       type: Array,
       default: () => {
         return [{ required: true, message: "账号不能为空", trigger: "blur" }];
@@ -108,7 +85,7 @@ export default {
       default: () => {
         return [{ required: true, message: "邮箱不能为空", trigger: "blur" }];
       }
-    },
+    }, */
     seen: {
       type: Boolean,
       default: false
@@ -127,16 +104,20 @@ export default {
       },
       identifyCodes: "1234567890",
       identifyCode: "",
-      isErrCode: false,
-      isErrMobile: false,
-      isErrMail: false
+      dis:false,
+      _dis:false
     };
   },
   mounted() {
     this.identifyCode = "";
     this.makeCode(this.identifyCodes, 4);
+    this.$Message.config({
+      top:200
+    });
+    this.judge();
+    this.reset();
   },
-  computed: {
+  /* computed: {
     rules() {
       return {
         userName: this.userNameRules,
@@ -147,7 +128,7 @@ export default {
         mail: this.mailRules
       };
     }
-  },
+  }, */
   methods: {
     
     randomNum(min, max) {
@@ -165,19 +146,14 @@ export default {
       }
       console.log(this.identifyCode);
     },
-    change1() {
-      this.isErrCode = false;
-      this.isErrMobile = false;
-      this.isErrMail = false;
-    },
     handleSubmit() {
       var inputCode = this.form.verifyCode;
       var verifyCode = this.identifyCode;
       console.log(verifyCode);
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          if (inputCode != verifyCode) {
-            this.isErrCode = true;
+          if (inputCode != verifyCode&&inputCode!='') {
+            this.$Message.info('验证码输入错误！');
           }else{
             this.$emit("on-success-valid", {
               userName: this.form.userName,
@@ -197,10 +173,10 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           if(!(/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(mail))){
-            this.isErrMail = true;
+            this.$Message.info('请输入有效的邮箱！');
             return false;
           }else if(!(/^1[345789]\d{9}$/.test(mobile))){
-            this.isErrMobile = true;
+            this.$Message.info('请输入有效的手机号！');
             return false; 
           } else {
             this.$emit("on-success-valid", {
@@ -215,6 +191,32 @@ export default {
       console.log(this.form.verifyCode);
       console.log(this.form.remember);
     },
+    judge(){
+      console.log(2222222)
+      var userName = this.form.userName;
+      var password = this.form.password;
+      var verifyCode = this.form.verifyCode;
+
+      if(userName==''||password==''||verifyCode==''){
+        console.log(this.dis)
+        this.dis = true
+      }else{
+        this.dis = false
+      }
+    },
+    reset(){
+      console.log(333333)
+      var userName = this.form.userName;
+      var mail = this.form.mail;
+      var mobile = this.form.mobile;
+      var _verifyCode = this.form._verifyCode;
+      if(userName==''||mail==''||mobile==''||_verifyCode==''){
+        console.log(this._dis)
+        this._dis = true
+      }else{
+        this._dis = false
+      }
+    }
   }
 };
 </script>

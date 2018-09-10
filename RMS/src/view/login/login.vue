@@ -36,10 +36,6 @@
             </div>
           </div>
         </Col>
-        <!-- <Col span="16">col-16</Col>
-        <Col span="8">
-          
-        </Col> -->
       </Row>
       
     </div>
